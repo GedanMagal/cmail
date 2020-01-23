@@ -1,1 +1,41 @@
-<p>cadastro works!</p>
+<div class="mdl-layout mdl-js-layout mdl-layout--fixed-drawer mdl-layout--fixed-header">
+    <cmail-header></cmail-header>
+    <main class="mdl-layout__content">
+      <div class="page-content">
+        <div class="mdl-grid">
+          <form>
+            
+            <!-- UTILIZAÇÃO DO COMPONENTE -->
+            <cmail-form-group>
+              <input autofocus required type="text" name="nome" cmailFormField>
+              <span class="mdl-textfield__error"> Informar um nome obrigatório! </span>
+            </cmail-form-group>
+
+            <cmail-form-group>
+                <input required type="text" name="username" cmailFormField >
+                <span class="mdl-textfield__error"> Informar um username obrigatório! </span>
+              </cmail-form-group>
+
+              <cmail-form-group>
+                  <input required type="password" name="password"  cmailFormField >
+                  <span class="mdl-textfield__error"> Informe uma senha! </span>
+                </cmail-form-group>
+
+                <cmail-form-group>
+                    <input type="text" name="avatar" cmailFormField>
+                    <span class="mdl-textfield__error"> Url Avatar </span>
+                  </cmail-form-group>
+
+
+  
+            <div class="mdl-card__actions">
+              <button class="mdl-button mdl-js-button mdl-button--raised mdl-button--accent">
+                Cadastrar
+              </button>
+            </div>
+  
+          </form>
+        </div>
+      </div>
+    </main>
+  </div>
