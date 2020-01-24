@@ -1,41 +1,57 @@
 <div class="mdl-layout mdl-js-layout mdl-layout--fixed-drawer mdl-layout--fixed-header">
-    <cmail-header></cmail-header>
-    <main class="mdl-layout__content">
-      <div class="page-content">
-        <div class="mdl-grid">
-          <form>
-            
-            <!-- UTILIZAÇÃO DO COMPONENTE -->
-            <cmail-form-group>
-              <input autofocus required type="text" name="nome" cmailFormField>
-              <span class="mdl-textfield__error"> Informar um nome obrigatório! </span>
-            </cmail-form-group>
+  <cmail-header></cmail-header>
+  <main class="mdl-layout__content">
+    <div class="page-content">
+      <div class="mdl-grid">
 
-            <cmail-form-group>
-                <input required type="text" name="username" cmailFormField >
-                <span class="mdl-textfield__error"> Informar um username obrigatório! </span>
-              </cmail-form-group>
+        <form [formGroup]="formCadastro" (ngSubmit)="handleCadastroUsuario()">
 
-              <cmail-form-group>
-                  <input required type="password" name="password"  cmailFormField >
-                  <span class="mdl-textfield__error"> Informe uma senha! </span>
-                </cmail-form-group>
+          <!-- UTILIZAÇÃO DO COMPONENTE -->
+          <cmail-form-group [campo]="formCadastro.get('nome')">
+            <input required type="text" formControlName="nome" name="nome" cmailFormField>
+            <!-- existem 3 formas de realizar a tratativa de erros -->
+            <span class="mdl-textfield__error" *ngIf="formCadastro.get('nome').hasError('required')"> Informar um nome
+              obrigatório! </span>
+          </cmail-form-group>
 
-                <cmail-form-group>
-                    <input type="text" name="avatar" cmailFormField>
-                    <span class="mdl-textfield__error"> Url Avatar </span>
-                  </cmail-form-group>
+          <cmail-form-group [campo]="formCadastro.get('username')">
+            <input required type="text" formControlName="username" name="username" cmailFormField>
+            <span class="mdl-textfield__error" *ngIf="formCadastro.get('username').getError('required')"> Informar um
+              username obrigatório! </span>
+            <span class="mdl-textfield__error" *ngIf="formCadastro.get('username').getError('minlength')"> Informar pelo
+              menos 3 caracteres </span>
+            <span class="mdl-textfield__error" *ngIf="formCadastro.get('username').getError('maxlength')"> Máximo de 5
+              caracteres! </span>
+          </cmail-form-group>
+
+          <cmail-form-group [campo]="formCadastro.get('password')">
+            <input required type="password" formControlName="password" name="password" cmailFormField>
+            <span class="mdl-textfield__error" *ngIf="formCadastro.get('password').getError('required')"> Senha
+              obrigatoria !</span>
+            <span class="mdl-textfield__error" *ngIf="formCadastro.get('password').getError('pattern')"> Validação de
+              pattern</span>
+            <!-- <span class="mdl-textfield__error" *ngIf="formCadastro.get('password').getError('minlength')"> Minimo de 5 caracteres</span> -->
+          </cmail-form-group>
 
 
-  
-            <div class="mdl-card__actions">
-              <button class="mdl-button mdl-js-button mdl-button--raised mdl-button--accent">
-                Cadastrar
-              </button>
-            </div>
-  
-          </form>
-        </div>
+          <cmail-form-group [campo]="formCadastro.get('avatar')">
+            <input type="text" formControlName="avatar" name="avatar" cmailFormField>
+            <span class="mdl-textfield__error"> Url Avatar </span>
+          </cmail-form-group>
+
+
+
+          <div class="mdl-card__actions">
+            <button class="mdl-button mdl-js-button mdl-button--raised mdl-button--accent">
+              Cadastrar
+            </button>
+          </div>
+          <div>
+
+            {{ formCadastro.get('nome').errors | json }}
+          </div>
+        </form>
       </div>
-    </main>
-  </div>
+    </div>
+  </main>
+</div>

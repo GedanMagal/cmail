@@ -1,4 +1,5 @@
-import { Component, OnInit, ElementRef } from '@angular/core';
+import { Component, OnInit, ElementRef, Input } from '@angular/core';
+import { FormControl } from '@angular/forms';
 
 @Component({
   selector: 'cmail-form-group',
@@ -8,6 +9,7 @@ import { Component, OnInit, ElementRef } from '@angular/core';
 export class FormGroupComponent implements OnInit {
   textoDaLabel = '';
   idCampo = '';
+  @Input() campo = new FormControl();
 
   constructor(
     private elemento: ElementRef
@@ -15,6 +17,7 @@ export class FormGroupComponent implements OnInit {
 
   //Acessa o dom e manipula os elementos
   ngOnInit() {
+    console.log(this.campo);
     const campo = this.elemento.nativeElement.querySelector('input');
     this.textoDaLabel = campo.name.replace(campo.name[0], campo.name[0].toUpperCase());
     this.idCampo = campo.name;
