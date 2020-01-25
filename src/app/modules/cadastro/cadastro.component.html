@@ -33,13 +33,25 @@
             <!-- <span class="mdl-textfield__error" *ngIf="formCadastro.get('password').getError('minlength')"> Minimo de 5 caracteres</span> -->
           </cmail-form-group>
 
+          <cmail-form-group [campo]="formCadastro.get('telefone')">
+            <input type="text" formControlName="telefone" name="telefone" cmailFormField>
+            <span class="mdl-textfield__error" *ngIf="formCadastro.get('telefone').getError('required')"> Telefone
+              Obrigatorio!</span>
+            <span class="mdl-textfield__error" *ngIf="formCadastro.get('telefone').getError('pattern')"> O telefone deve
+              conter 8 ou 9 números</span>
+          </cmail-form-group>
 
           <cmail-form-group [campo]="formCadastro.get('avatar')">
             <input type="text" formControlName="avatar" name="avatar" cmailFormField>
-            <span class="mdl-textfield__error"> Url Avatar </span>
+            <span class="mdl-textfield__error" *ngIf="formCadastro.get('avatar').hasError('required')">Informar uma URL
+              com avatar é obrigatório</span>
+            <span class="mdl-textfield__error mdl-textfield__checking"
+              *ngIf="formCadastro.get('avatar').status == 'PENDING'">Validação pendente...</span>
+            <span class="mdl-textfield__error mdl-textfield__valid"
+              *ngIf="formCadastro.get('avatar').status == 'VALID'">URL valida</span>
+            <span class="mdl-textfield__error mdl-textfield__invalid" 
+              *ngIf="formCadastro.get('avatar').hasError('urlInvalida')">Erro na URL informada</span>
           </cmail-form-group>
-
-
 
           <div class="mdl-card__actions">
             <button class="mdl-button mdl-js-button mdl-button--raised mdl-button--accent">
