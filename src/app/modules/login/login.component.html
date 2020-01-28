@@ -1,1 +1,44 @@
-<p>login works!</p>
+<div class="mdl-layout mdl-js-layout">
+    <main class="mdl-layout__content">
+        <div class="page-content">
+            <div class="mdl-grid">
+                <article class="demo-card-wide mdl-card mdl-shadow--2dp">
+                    <header class="mdl-card__title">
+                        <h1 class="mdl-card__title-text">Bem vindos/as ao CMail!</h1>
+                    </header>
+
+                    <form [formGroup]="formLogin" (submit)="handleLogin()" autocomplete="off"
+                        class="mdl-card__supporting-text">
+                        <!-- aqui os campos do formulário -->
+                        <cmail-form-group [campo]="formLogin.get('email')">
+                            <input required type="text" formControlName="email" name="email" cmailFormField>
+                            <span class="mdl-textfield__error" *ngIf="formLogin.get('email').hasError('required')">
+                                    email Obrigatorio </span>
+                        </cmail-form-group>
+                        <cmail-form-group [campo]="formLogin.get('password')">
+                            <input required type="text" formControlName="password" name="password" cmailFormField>
+                            <span class="mdl-textfield__error" *ngIf="formLogin.get('password').hasError('required')">
+                                password Obrigatorio </span>
+                        </cmail-form-group>
+                        <section *ngIf="msgErro" class="mdl-textfield is-valid">
+                            <p class="mdl-textfield__error">
+                                {{msgErro.message}}
+                            </p>
+
+
+                        </section>
+                        <div class="mdl-card__actions mdl-card--border">
+                            <a routerLink="/cadastro"
+                                class="mdl-button mdl-button--colored mdl-js-button mdl-js-ripple-effect">
+                                Primeiro login? Cadastre-se!
+                            </a>
+                            <button class="mdl-button mdl-js-button mdl-button--raised mdl-button--accent entrar">
+                                Entrar
+                            </button>
+                        </div>
+                    </form>
+                </article>
+            </div>
+        </div>
+    </main>
+</div>
