@@ -4,6 +4,8 @@ import { CaixaDeEntradaComponent } from './caixa-de-entrada.component';
 import { FormsModule } from '@angular/forms';
 import { SharedModule } from 'src/app/components/shared.module';
 import { CaixaDeEntradaRoutingModule } from './caixa-de-entrada-routing.module';
+import { EmailService } from 'src/app/services/email.service';
+import { HttpClientModule } from '@angular/common/http';
 
 
 
@@ -15,7 +17,11 @@ import { CaixaDeEntradaRoutingModule } from './caixa-de-entrada-routing.module';
     CommonModule,
     FormsModule,
     SharedModule,
-    CaixaDeEntradaRoutingModule
+    CaixaDeEntradaRoutingModule,
+    HttpClientModule
+  ],
+  providers: [
+    EmailService
   ]
 })
 export class CaixaDeEntradaModule { }

@@ -1,15 +1,18 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
+import { AuthGuard } from './guard/auth.guard';
 
   const rotas: Routes =[
     {
+      canActivate: [AuthGuard],
       path: 'cadastro',
       loadChildren: () =>
       import('./modules/cadastro/cadastro.module')
       .then(m => m.CadastroModule)
     },
     {
-      path: 'caixa-de-entrada',
+      canActivate: [AuthGuard],
+      path: 'inbox',
       loadChildren: () =>
       import('./modules/caixa-de-entrada/caixa-de-entrada.module')
       .then(m => m.CaixaDeEntradaModule)
@@ -34,6 +37,9 @@ import { Routes, RouterModule } from '@angular/router';
   ],
   exports: [
     RouterModule
+  ],
+  providers: [
+    AuthGuard
   ]
 })
 export class AppRoutingModule { }

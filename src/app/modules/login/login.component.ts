@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { FormControl, Validators, FormGroup } from '@angular/forms';
-import { HttpClientModule, HttpClient } from '@angular/common/http';
+import { HttpClientModule, HttpClient, HttpErrorResponse } from '@angular/common/http';
+import { Routes, Router } from '@angular/router';
+import { LoginService } from 'src/app/services/login.service';
 
 @Component({
   selector: 'app-login',
@@ -16,34 +18,30 @@ export class LoginComponent implements OnInit {
 
   msgErro: string = '';
 
-  constructor(private httpClient: HttpClient) { }
+  constructor(
+    private roteador: Router,
+    private loginService: LoginService) { }
 
   ngOnInit() {
   }
 
   handleLogin() {
-    console.log(this.formLogin.value);
+    console.log(this.formLogin.value)
     if (this.formLogin.valid) {
-      console.log(this.formLogin.get('email').value);
-      this.httpClient
-        .post('http://localhost:5000/login', this.formLogin.value)
-        .subscribe((response: any) => {
-          console.log(response);
-          console.log('deu bom carai');
-          localStorage.setItem('cmail-token', response.token);
+      this.loginService.logar(this.formLogin.value)
+        .subscribe(
+          () => {
+          this.roteador.navigate(['/inbox']);
         },
-          (err) => {
-            console.log(err);
-            console.log('deu ruim carai');
+          (responseError: HttpErrorResponse) => {
+            console.log(responseError);
+            this.msgErro = responseError.error.message;
           });
-
     } else {
       this.formLogin.markAllAsTouched();
       return;
     }
-
   }
-
 }
 
 
