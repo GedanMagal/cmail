@@ -7,7 +7,7 @@ import { EmailService } from 'src/app/services/email.service';
   templateUrl: './caixa-de-entrada.component.html',
   styleUrls: ['./caixa-de-entrada.component.css']
 })
-export class CaixaDeEntradaComponent {
+export class CaixaDeEntradaComponent implements OnInit {
   private _isNewEmailOpen = false;
 
   //Lista de emails - Sendo percorrida no Html para pegar todos os emails enviados pelo formulario tratado
@@ -17,6 +17,10 @@ export class CaixaDeEntradaComponent {
     destinatario: '',
     assunto: '',
     conteudo: ''
+  }
+
+  ngOnInit() {
+    this.listar();
   }
 
   constructor(
@@ -30,8 +34,33 @@ export class CaixaDeEntradaComponent {
     return this._isNewEmailOpen;
   }
 
+  listar() {
+    this.emailService
+      .listar()
+      .subscribe(
+        lista => {
+          this.emailList = lista;
+        }
+      )
+  }
+
   toggleMail() {
     this._isNewEmailOpen = !this._isNewEmailOpen;
+  }
+
+  handleRemoveEmail(event, id: string) {
+    if (event.status === 'removing') {
+
+
+      this.emailService.deletar(id)
+        .subscribe(
+          (res) => {
+            console.log(res);
+            this.emailList = this.emailList.filter(email => email.id != id);
+          },
+          (error) => console.log(error)
+        );
+    }
   }
 
   handleEmail(form: NgForm) {
@@ -40,18 +69,18 @@ export class CaixaDeEntradaComponent {
     if (form.invalid) return;
 
     this.emailService.enviar(this.email)
-    .subscribe(
-      (response) =>{
-        this.emailList.push(this.email);
-        this.email = {
-          destinatario: '',
-          assunto: '',
-          conteudo: ''
-        };
+      .subscribe(
+        (response) => {
+          this.emailList.push(this.email);
+          this.email = {
+            destinatario: '',
+            assunto: '',
+            conteudo: ''
+          };
 
-        form.reset();
-        this.toggleMail();
-      }),
+          form.reset();
+          this.toggleMail();
+        }),
       (error) => console.log(error);
 
     //evento de captura de valores do formulario e a key referente a cada elemento referencia no html
