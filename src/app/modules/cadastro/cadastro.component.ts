@@ -3,6 +3,7 @@ import { FormGroup, FormControl, ReactiveFormsModule, Validators } from '@angula
 import { HttpClient, HttpResponseBase } from '@angular/common/http';
 import { map, catchError } from 'rxjs/operators';
 import { User } from 'src/app/models/user';
+import { PageService } from 'src/app/services/page.service';
 
 @Component({
   selector: 'app-cadastro',
@@ -20,10 +21,12 @@ export class CadastroComponent implements OnInit {
   });
 
   constructor(
-    private httpClient: HttpClient
+    private httpClient: HttpClient,
+    private pageService : PageService
   ) { }
 
   ngOnInit() {
+    this.pageService.defineTitulo('Cadastro')
   }
 
   validaImagem(campoAvatar: FormControl) {

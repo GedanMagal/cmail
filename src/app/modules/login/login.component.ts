@@ -3,6 +3,7 @@ import { FormControl, Validators, FormGroup } from '@angular/forms';
 import { HttpClientModule, HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { Routes, Router } from '@angular/router';
 import { LoginService } from 'src/app/services/login.service';
+import { PageService } from 'src/app/services/page.service';
 
 @Component({
   selector: 'app-login',
@@ -20,9 +21,11 @@ export class LoginComponent implements OnInit {
 
   constructor(
     private roteador: Router,
-    private loginService: LoginService) { }
+    private loginService: LoginService,
+    private pageService : PageService) { }
 
   ngOnInit() {
+    this.pageService.defineTitulo('Login');
   }
 
   handleLogin() {
